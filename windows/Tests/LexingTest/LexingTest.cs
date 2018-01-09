@@ -96,5 +96,22 @@ namespace LexingTest
 
 			Assert.AreEqual(result.Text, expected);
 		}
+
+		[TestMethod]
+		public void StringLexTest()
+		{
+			ILexRule stringQuotRule = new SimpleLexRule(LexMatchType.LitStringQuot, "(?<!\\\\)\"");
+			ILexRule escapeQuotRule = new SimpleLexRule(LexMatchType.LitStringEscape, "\\\"");
+			ContainerLexRule stringRule = new ContainerLexRule(LexMatchType.LitString, stringQuotRule, stringQuotRule);
+
+			stringRule.Add(escapeQuotRule);
+
+			string source = "  \"I am a string!\"  ";
+			string expected = "\"I am a string!\"";
+
+			ILexResult result = stringRule.Match(source);
+
+			Assert.AreEqual(expected, result.Text);
+		}
 	}
 }

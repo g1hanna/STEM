@@ -63,7 +63,8 @@ namespace StemInterpretter.Lexing {
 			return getAllRules().GetEnumerator();
 		}
 
-		private ICollection<ILexRule> getAllRules() {
+		private ICollection<ILexRule> getAllRules()
+		{
 			List<ILexRule> _totalRules = new List<ILexRule>();
 
 			// add begin and end rules
@@ -72,6 +73,26 @@ namespace StemInterpretter.Lexing {
 			_totalRules.Add(_endRule);
 
 			return _totalRules;
+		}
+
+		public bool IsConfined()
+		{
+			return BeginRule != null && EndRule != null;
+		}
+
+		public bool IsBoundless()
+		{
+			return BeginRule == null && EndRule == null;
+		}
+
+		public bool IsBeginningless()
+		{
+			return BeginRule == null;
+		}
+
+		public bool IsInconclusive()
+		{
+			return EndRule == null;
 		}
 
 		public ILexResult Match(string target)
@@ -98,6 +119,8 @@ namespace StemInterpretter.Lexing {
 					eaten = eaten.Remove(container.EndResult.Start, eaten.Length);
 				}
 			}
+
+			container.ContainerText = eaten;
 
 			// for each rule, find matches associated with it
 			foreach (var rule in _innerRules) {

@@ -10,11 +10,31 @@ namespace StemInterpretter.Lexing {
 		private LexResultGroup _innerResults;
 		private ILexResult _beginResult;
 		private ILexResult _endResult;
+		public string ContainerText { get; set; }
 		public LexMatchType MatchType { get; set; }
 		#endregion
 
 		#region PROPERTIES
-		public string Text => ((ILexResult)_innerResults).Text;
+		public string Text {
+			get {
+				string result = "";
+
+				// add beginning result text first
+				result = result.Insert(0, _beginResult.Text);
+
+				if (string.IsNullOrEmpty(ContainerText)) {
+					result = result.Insert(result.Length, _innerResults.Text);
+				}
+				else {
+					result = result.Insert(result.Length, ContainerText.Substring(Start, _endResult.GetEnd() - Start));
+				}
+
+				// add ending result text last
+				result = result.Insert(result.Length, _endResult.Text);
+
+				return result;
+			}
+		}
 
 		public int Length => ((ILexResult)_innerResults).Length;
 
@@ -34,12 +54,19 @@ namespace StemInterpretter.Lexing {
 			return;
 		}
 		
-		public ContainerLexResult(LexMatchType matchType, ILexResult beginResult, ILexResult endResult)
+		public ContainerLexResult(LexMatchType matchType, ILexResult beginResult, ILexResult endResult, string containerText)
 		{
 			MatchType = matchType;
 			_beginResult = beginResult;
 			_endResult = endResult;
 			_innerResults = new LexResultGroup(MatchType, Start);
+			ContainerText = containerText;
+		}
+
+		public ContainerLexResult(LexMatchType matchType, ILexResult beginResult, ILexResult endResult)
+		: this(matchType, beginResult, endResult, "")
+		{
+			return;
 		}
 
 		public ContainerLexResult(LexMatchType matchType, int start)

@@ -5,13 +5,16 @@ namespace StemInterpretter.Lexing {
 
 	public enum LexMatchType {
 		None,
+		Invalid,
 		Null,
 		Whitespace,
 		LitInt,
 		LitBool,
 		LitFloat,
 		LitFloatSep,
-		Invalid
+		LitStringQuot,
+		LitString,
+		LitStringEscape
 	}
 
 }
