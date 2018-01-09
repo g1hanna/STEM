@@ -52,6 +52,29 @@ namespace LexingTest
 			Assert.AreEqual(result.Text, expected);
 		}
 
-		
+		[TestMethod]
+		public void BoolLexTest() {
+			ILexRule boolRule = new UnionLexRule(LexMatchType.LitBool,
+			new ILexRule[] {
+				// true pattern
+				new SimpleLexRule(LexMatchType.LitBool, "\\btrue\\b"),
+				// false pattern
+				new SimpleLexRule(LexMatchType.LitBool, "\\bfalse\\b")
+			});
+
+			string source = "     true   ";
+			string expected = "true";
+
+			ILexResult result = boolRule.Match(source);
+
+			Assert.AreEqual(result.Text, expected);
+
+			source = "     false   ";
+			expected = "false";
+
+			result = boolRule.Match(source);
+
+			Assert.AreEqual(result.Text, expected);
+		}
 	}
 }

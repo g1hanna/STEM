@@ -8,6 +8,7 @@ namespace StemInterpretter.Lexing {
 		Null,
 		Whitespace,
 		LitInt,
+		LitBool,
 		Invalid
 	}
 
