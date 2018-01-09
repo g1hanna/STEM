@@ -26,7 +26,7 @@ namespace StemInterpretter.Lexing {
 					result = result.Insert(result.Length, _innerResults.Text);
 				}
 				else {
-					result = result.Insert(result.Length, ContainerText.Substring(Start, _endResult.GetEnd() - Start));
+					result = result.Insert(result.Length, ContainerText);
 				}
 
 				// add ending result text last

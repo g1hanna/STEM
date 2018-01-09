@@ -103,20 +103,24 @@ namespace StemInterpretter.Lexing {
 
 			// match beginning and ending rules first
 			if (BeginRule != null) {
-				container.BeginResult = BeginRule.Match(eaten);
+				var beginResult = BeginRule.Match(eaten);
+
+				container.BeginResult = beginResult;
 				offset = container.Start;
 
-				if (!container.BeginResult.IsUnmatched()) {
-					eaten = eaten.Remove(0, container.BeginResult.GetEnd());
+				if (!beginResult.IsUnmatched()) {
+					eaten = eaten.Remove(0, beginResult.GetEnd());
 				}
 			}
 
-			if (EndRule == null) {
+			if (EndRule != null) {
 				// offset the result if there is any
-				container.EndResult = EndRule.Match(eaten).Offset(offset);
+				var endResult = EndRule.Match(eaten);
 
-				if (!container.EndResult.IsUnmatched()) {
-					eaten = eaten.Remove(container.EndResult.Start, eaten.Length);
+				container.EndResult = endResult.Offset(offset);
+
+				if (!endResult.IsUnmatched()) {
+					eaten = eaten.Remove(endResult.Start);
 				}
 			}
 
