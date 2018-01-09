@@ -6,10 +6,11 @@ _Contains information regarding the sprint's Git repository._
 
 _Git Branches used in the project._
 
-Checked out: **win-sprint1**
+Checked out: **lexing-ws1**
 
 | Date Created | Branch Name |
 | ------------ | ----------- |
+| 01.09.2017   | lexing-ws1  |
 | 01.09.2017   | win-sprint1 |
 | 01.09.2017   | windows     |
 | 01.09.2017   | master      |
@@ -20,6 +21,7 @@ _Commits made throughout the project._
 
 | Date Created | Branch Name | Commit Description |
 | ------------ | ----------- | ------------------ |
+| 01.09.2017   | lexing-ws1  | Initial lexing commit |
 | 01.09.2017   | win-sprint1 | Set up initial .NET Core projects |
 | 01.09.2017   | win-sprint1 | Added Sprint 1 workflow documentation |
 | 01.09.2017   | master      | Initial commit |
