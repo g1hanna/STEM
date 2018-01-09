@@ -14,7 +14,8 @@ namespace StemInterpretter.Lexing {
 		LitFloatSep,
 		LitStringQuot,
 		LitString,
-		LitStringEscape
+		LitStringEscape,
+		Program
 	}
 
 }

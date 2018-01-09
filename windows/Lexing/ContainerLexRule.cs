@@ -140,11 +140,14 @@ namespace StemInterpretter.Lexing {
 					}
 					else {
 						// add an offset result to the container
-						if (!container.Overlaps(result))
-							container.Add(result.Offset(ruleOffset));
+						ILexResult offsetResult = result.Offset(offset);
+						if (!container.Overlaps(offsetResult))
+							container.Add(offsetResult);
 
 						// increment offset by 1 for zero-length matches
 						if (result.Length == 0) {
+							if (ruleEaten.Length == 0) break;
+							
 							ruleEaten = ruleEaten.Remove(0, 1);
 							ruleOffset += 1;
 						}

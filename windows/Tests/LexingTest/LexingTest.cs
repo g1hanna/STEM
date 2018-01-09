@@ -113,5 +113,10 @@ namespace LexingTest
 
 			Assert.AreEqual(expected, result.Text);
 		}
+
+		[TestMethod]
+		public void LexerTest() {
+
+		}
 	}
 }
