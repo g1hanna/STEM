@@ -20,5 +20,6 @@ _Commits made throughout the project._
 
 | Date Created | Branch Name | Commit Description |
 | ------------ | ----------- | ------------------ |
+| 01.09.2017   | win-sprint1 | Set up initial .NET Core projects |
 | 01.09.2017   | win-sprint1 | Added Sprint 1 workflow documentation |
 | 01.09.2017   | master      | Initial commit |

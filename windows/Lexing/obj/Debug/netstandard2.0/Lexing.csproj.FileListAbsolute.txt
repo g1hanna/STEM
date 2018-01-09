@@ -1,0 +1,8 @@
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Lexing\bin\Debug\netstandard2.0\Lexing.deps.json
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Lexing\bin\Debug\netstandard2.0\Lexing.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Lexing\bin\Debug\netstandard2.0\Lexing.pdb
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Lexing\obj\Debug\netstandard2.0\Lexing.csproj.CoreCompileInputs.cache
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Lexing\obj\Debug\netstandard2.0\Lexing.AssemblyInfoInputs.cache
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Lexing\obj\Debug\netstandard2.0\Lexing.AssemblyInfo.cs
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Lexing\obj\Debug\netstandard2.0\Lexing.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Lexing\obj\Debug\netstandard2.0\Lexing.pdb
