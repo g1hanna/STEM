@@ -9,6 +9,8 @@ namespace StemInterpretter.Lexing {
 		Whitespace,
 		LitInt,
 		LitBool,
+		LitFloat,
+		LitFloatSep,
 		Invalid
 	}
 

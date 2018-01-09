@@ -41,10 +41,10 @@ namespace StemInterpretter.Lexing {
 		}
 
 		public static bool Overlaps(this ILexResult result, ILexResult target) {
-			if (target.Start > result.Start && target.Start <= result.GetEnd()) {
+			if (target.Start > result.Start && target.Start < result.GetEnd()) {
 				return true;
 			}
-			else if (target.GetEnd() > result.Start && target.GetEnd() <= result.GetEnd()) {
+			else if (target.GetEnd() > result.Start && target.GetEnd() < result.GetEnd()) {
 				return true;
 			}
 			else {

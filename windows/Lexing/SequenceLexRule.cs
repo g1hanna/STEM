@@ -61,14 +61,15 @@ namespace StemInterpretter.Lexing {
 			// get first match, then offset
 			ILexResult firstResult = _rules[0].Match(target);
 			if (!firstResult.IsSuccessful()) return LexNode.NoMatch;
-
-			group.Start = firstResult.GetEnd();
+			
 			string eaten = target.Clone() as string;
 
-			// eat the string until after the match
-			eaten = eaten.Remove(0, group.Start);
+			group.Start = firstResult.Start;
+			group.Add(firstResult);
 
-			int offset = group.Start;
+			// eat the string until after the match
+			eaten = eaten.Remove(0, firstResult.GetEnd());
+			int offset = firstResult.GetEnd();
 
 			// go through each match after the first
 			for (int i = 1; i < Count; i++) {
@@ -86,7 +87,7 @@ namespace StemInterpretter.Lexing {
 
 						// store an offset copy to the group
 						group.Add(result.Offset(offset));
-
+						
 						// offset the offset
 						offset += result.GetEnd();
 					}

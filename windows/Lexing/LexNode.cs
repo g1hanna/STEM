@@ -9,7 +9,7 @@ namespace StemInterpretter.Lexing {
 		public string Text { get; set; }
 		public int Start { get; set; }
 
-		public int Length => Start + Text.Length;
+		public int Length => Text.Length;
 		
 		public LexNode(LexMatchType matchType, int start, string text)
 		{

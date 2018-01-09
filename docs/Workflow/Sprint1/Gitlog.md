@@ -21,6 +21,7 @@ _Commits made throughout the project._
 
 | Date Created | Branch Name | Commit Description |
 | ------------ | ----------- | ------------------ |
+| 01.09.2017   | lexing-ws1  | Fixed sequence rule and confirmed functionality |
 | 01.09.2017   | lexing-ws1  | Confirmed union rule functionality |
 | 01.09.2017   | lexing-ws1  | Confirmed function-based and simple rule functionality |
 | 01.09.2017   | lexing-ws1  | Added constructors to SequenceLexRule |

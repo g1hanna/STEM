@@ -41,7 +41,8 @@ namespace LexingTest
 		}
 
 		[TestMethod]
-		public void WhitespeceLexTest() {
+		public void WhitespeceLexTest()
+		{
 			ILexRule whitespaceRule = new SimpleLexRule(LexMatchType.LitInt, "\\s+");
 
 			string source = "     834   ";
@@ -53,7 +54,8 @@ namespace LexingTest
 		}
 
 		[TestMethod]
-		public void BoolLexTest() {
+		public void BoolLexTest()
+		{
 			ILexRule boolRule = new UnionLexRule(LexMatchType.LitBool,
 			new ILexRule[] {
 				// true pattern
@@ -73,6 +75,24 @@ namespace LexingTest
 			expected = "false";
 
 			result = boolRule.Match(source);
+
+			Assert.AreEqual(result.Text, expected);
+		}
+
+		[TestMethod]
+		public void FloatLexTest()
+		{
+			ILexRule intRule = new SimpleLexRule(LexMatchType.LitInt, "[0-9]+");
+			SequenceLexRule floatRule = new SequenceLexRule(LexMatchType.LitFloat);
+
+			floatRule.Add(intRule);
+			floatRule.Add(new SimpleLexRule(LexMatchType.LitFloatSep, "\\."));
+			floatRule.Add(intRule);
+
+			string source = " 452.39  ";
+			string expected = "452.39";
+
+			ILexResult result = floatRule.Match(source);
 
 			Assert.AreEqual(result.Text, expected);
 		}
