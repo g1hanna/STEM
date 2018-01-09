@@ -1600,6 +1600,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
+      },
+      "Lexing/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/Lexing.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Lexing.dll": {}
+        }
       }
     }
   },
@@ -5610,10 +5620,16 @@
         "system.xml.xpath.xmldocument.4.0.1.nupkg.sha512",
         "system.xml.xpath.xmldocument.nuspec"
       ]
+    },
+    "Lexing/1.0.0": {
+      "type": "project",
+      "path": "../../Lexing/Lexing.csproj",
+      "msbuildProject": "../../Lexing/Lexing.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
+      "Lexing >= 1.0.0",
       "MSTest.TestAdapter >= 1.1.18",
       "MSTest.TestFramework >= 1.1.18",
       "Microsoft.NET.Test.Sdk >= 15.3.0-preview-20170628-02",
@@ -5649,7 +5665,11 @@
       },
       "frameworks": {
         "netcoreapp2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\G1HannaMax\\CodeSpace\\Projects\\Stem\\windows\\Lexing\\Lexing.csproj": {
+              "projectPath": "C:\\Users\\G1HannaMax\\CodeSpace\\Projects\\Stem\\windows\\Lexing\\Lexing.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

@@ -1,0 +1,15 @@
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\bin\Debug\netcoreapp2.0\LexingTest.deps.json
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\bin\Debug\netcoreapp2.0\LexingTest.runtimeconfig.json
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\bin\Debug\netcoreapp2.0\LexingTest.runtimeconfig.dev.json
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\bin\Debug\netcoreapp2.0\LexingTest.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\bin\Debug\netcoreapp2.0\LexingTest.pdb
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\bin\Debug\netcoreapp2.0\Lexing.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\bin\Debug\netcoreapp2.0\Lexing.pdb
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\obj\Debug\netcoreapp2.0\LexingTest.csproj.CoreCompileInputs.cache
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\obj\Debug\netcoreapp2.0\LexingTest.AssemblyInfoInputs.cache
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\obj\Debug\netcoreapp2.0\LexingTest.AssemblyInfo.cs
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\obj\Debug\netcoreapp2.0\LexingTest.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\LexingTest\obj\Debug\netcoreapp2.0\LexingTest.pdb

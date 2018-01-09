@@ -14,6 +14,18 @@ namespace StemInterpretter.Lexing {
 
 		public LexMatchType MatchType { get; set; }
 
+		public SequenceLexRule(LexMatchType matchType, IList<ILexRule> rules)
+		{
+			MatchType = matchType;
+			_rules = rules;
+		}
+
+		public SequenceLexRule(LexMatchType matchType)
+		: this(matchType, new List<ILexRule>())
+		{
+			return;
+		}
+
 		public void Add(ILexRule item)
 		{
 			_rules.Add(item);

@@ -21,6 +21,7 @@ _Commits made throughout the project._
 
 | Date Created | Branch Name | Commit Description |
 | ------------ | ----------- | ------------------ |
+| 01.09.2017   | lexing-ws1  | Added constructors to SequenceLexRule |
 | 01.09.2017   | lexing-ws1  | Set up LexingTest project |
 | 01.09.2017   | lexing-ws1  | Established lexing framework |
 | 01.09.2017   | lexing-ws1  | Initial lexing commit |
