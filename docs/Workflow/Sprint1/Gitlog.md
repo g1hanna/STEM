@@ -6,10 +6,11 @@ _Contains information regarding the sprint's Git repository._
 
 _Git Branches used in the project._
 
-Checked out: **lexing-ws1**
+Checked out: **parsing-ws1**
 
 | Date Created | Branch Name |
 | ------------ | ----------- |
+| 01.10.2017   | parsing-ws1 |
 | 01.09.2017   | lexing-ws1  |
 | 01.09.2017   | win-sprint1 |
 | 01.09.2017   | windows     |
@@ -21,6 +22,7 @@ _Commits made throughout the project._
 
 | Date Created | Branch Name | Commit Description |
 | ------------ | ----------- | ------------------ |
+| 01.10.2017   | parsing-ws1 | Initial parsing commit |
 | 01.09.2017   | lexing-ws1  | Completed lexer functionality and fixed ICloneables |
 | 01.09.2017   | lexing-ws1  | Made Lexer.Lex(string) more consistent with container rule |
 | 01.09.2017   | lexing-ws1  | Fixed container rule and container result and restored functionality |

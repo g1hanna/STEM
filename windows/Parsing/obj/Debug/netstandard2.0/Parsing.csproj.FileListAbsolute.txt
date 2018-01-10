@@ -6,3 +6,5 @@ C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Parsing\obj\Debug\netstandar
 C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Parsing\obj\Debug\netstandard2.0\Parsing.AssemblyInfo.cs
 C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Parsing\obj\Debug\netstandard2.0\Parsing.dll
 C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Parsing\obj\Debug\netstandard2.0\Parsing.pdb
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Parsing\bin\Debug\netstandard2.0\Lexing.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Parsing\bin\Debug\netstandard2.0\Lexing.pdb
