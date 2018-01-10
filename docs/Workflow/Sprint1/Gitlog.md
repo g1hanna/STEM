@@ -21,6 +21,7 @@ _Commits made throughout the project._
 
 | Date Created | Branch Name | Commit Description |
 | ------------ | ----------- | ------------------ |
+| 01.09.2017   | lexing-ws1  | Completed lexer functionality and fixed ICloneables |
 | 01.09.2017   | lexing-ws1  | Made Lexer.Lex(string) more consistent with container rule |
 | 01.09.2017   | lexing-ws1  | Fixed container rule and container result and restored functionality |
 | 01.09.2017   | lexing-ws1  | Updated ContainerLexRule w/ContainerText and bound check members |

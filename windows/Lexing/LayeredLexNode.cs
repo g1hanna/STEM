@@ -33,6 +33,19 @@ namespace StemInterpretter.Lexing {
 
 		#region METHODS
 		public object Clone() => new LayeredLexNode(MatchType, _node.Clone() as ILexResult);
+
+		public ILexResult Offset(int offset)
+		{
+			LayeredLexNode copy = (LayeredLexNode)Clone();
+			copy._node = copy._node.Offset(offset);
+
+			return copy;
+		}
+
+		public ILexResult Move(int position)
+		{
+			return Offset(position - Start);
+		}
 		#endregion
 	}
 

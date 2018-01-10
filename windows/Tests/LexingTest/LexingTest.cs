@@ -115,8 +115,93 @@ namespace LexingTest
 		}
 
 		[TestMethod]
-		public void LexerTest() {
+		public void LexerTest()
+		{
+			#region INIT LEX RULES
+			// initialize lex rules
+			// - null
+			ILexRule nullRule = new FunctionalLexRule(
+				LexMatchType.Null,
+				target => {
+					if (string.IsNullOrEmpty(target))
+						return new LexNode(LexMatchType.Null, 0, "");
+					else
+						return LexNode.NoMatch;
+				}
+			);
+			// - literal integer
+			ILexRule intRule = new SimpleLexRule(LexMatchType.LitInt, "[0-9]+");
+			// - whitespace
+			ILexRule whitespaceRule = new SimpleLexRule(LexMatchType.Whitespace, "\\s+");
+			// - literal boolean
+			ILexRule boolRule = new UnionLexRule(LexMatchType.LitBool,
+				new ILexRule[] {
+					// true pattern
+					new SimpleLexRule(LexMatchType.LitBool, "\\btrue\\b"),
+					// false pattern
+					new SimpleLexRule(LexMatchType.LitBool, "\\bfalse\\b")
+				}
+			);
+			// - literal floating-point number
+			SequenceLexRule floatRule = new SequenceLexRule(LexMatchType.LitFloat);
 
+			floatRule.Add(intRule);
+			floatRule.Add(new SimpleLexRule(LexMatchType.LitFloatSep, "\\."));
+			floatRule.Add(intRule);
+
+			// - literal string
+			ILexRule stringQuotRule = new SimpleLexRule(LexMatchType.LitStringQuot, "(?<!\\\\)\"");
+			ILexRule escapeQuotRule = new SimpleLexRule(LexMatchType.LitStringEscape, "\\\"");
+			ContainerLexRule stringRule = new ContainerLexRule(LexMatchType.LitString, stringQuotRule, stringQuotRule);
+			#endregion
+
+			#region INIT LEXER
+			// initialize lexer
+			Lexer myLexer = new Lexer();
+
+			myLexer.AddMultiple(
+				stringRule,
+				boolRule,
+				floatRule,
+				intRule,
+				whitespaceRule,
+				nullRule
+			);
+			#endregion
+
+			// prepare general variables
+			string source;
+			string expected;
+			LexResultGroup lexedSource;
+
+			// test vigorously
+			// 1) null
+			source = "";
+			expected = "";
+			lexedSource = myLexer.Lex(source);
+
+			Assert.AreEqual(expected, lexedSource[0].Text);
+
+			// 2) whitespace, integers, and booleans
+			source = "  672    true   786  ";
+			lexedSource = myLexer.Lex(source);
+
+			Assert.AreEqual("  ", lexedSource[0].Text);
+			Assert.AreEqual("672", lexedSource[1].Text);
+			Assert.AreEqual("    ", lexedSource[2].Text);
+			Assert.AreEqual("true", lexedSource[3].Text);
+			Assert.AreEqual("   ", lexedSource[4].Text);
+			Assert.AreEqual("786", lexedSource[5].Text);
+			Assert.AreEqual("  ", lexedSource[6].Text);
+
+			// 3) whitespace, floats, and strings
+			source = "  \"My value is 972.987.\"  972.987";
+			lexedSource = myLexer.Lex(source);
+
+			Assert.AreEqual("  ", lexedSource[0].Text);
+			Assert.AreEqual("\"My value is 972.987.\"", lexedSource[1].Text);
+			Assert.AreEqual("  ", lexedSource[2].Text);
+			Assert.AreEqual("972.987", lexedSource[3].Text);
 		}
 	}
 }

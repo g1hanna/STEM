@@ -77,22 +77,32 @@ namespace StemInterpretter.Lexing {
 
 		public bool IsConfined()
 		{
-			return BeginRule != null && EndRule != null;
+			return !IsBeginningless() && !IsInconclusive();
 		}
 
 		public bool IsBoundless()
 		{
-			return BeginRule == null && EndRule == null;
+			return IsBeginningless() && IsInconclusive();
 		}
 
 		public bool IsBeginningless()
 		{
-			return BeginRule == null;
+			if (BeginRule == null) {
+				return true;
+			}
+			else {
+				return (BeginRule.MatchType == LexMatchType.None);
+			}
 		}
 
 		public bool IsInconclusive()
 		{
-			return EndRule == null;
+			if (EndRule == null) {
+				return true;
+			}
+			else {
+				return (EndRule.MatchType == LexMatchType.None);
+			}
 		}
 
 		public ILexResult Match(string target)
@@ -105,12 +115,18 @@ namespace StemInterpretter.Lexing {
 			if (BeginRule != null) {
 				var beginResult = BeginRule.Match(eaten);
 
+				if (!beginResult.IsSuccessful()) return LexNode.NoMatch;
+
 				container.BeginResult = beginResult;
-				offset = container.Start;
+				offset = beginResult.GetEnd();
 
 				if (!beginResult.IsUnmatched()) {
 					eaten = eaten.Remove(0, beginResult.GetEnd());
 				}
+			}
+			else {
+				// return no match if there is no beginning
+				return LexNode.NoMatch;
 			}
 
 			if (EndRule != null) {
@@ -123,6 +139,9 @@ namespace StemInterpretter.Lexing {
 					eaten = eaten.Remove(endResult.Start);
 				}
 			}
+			else {
+				container.EndResult = LexNode.NoMatch;
+			}
 
 			container.ContainerText = eaten;
 
@@ -131,7 +150,8 @@ namespace StemInterpretter.Lexing {
 				string ruleEaten = eaten;
 				int ruleOffset = offset;
 
-				while (ruleEaten.Length > 0) {
+				do
+				{
 					ILexResult result = rule.Match(ruleEaten);
 
 					// break if no more matches can be found
@@ -159,6 +179,7 @@ namespace StemInterpretter.Lexing {
 						}
 					}
 				}
+				while (ruleEaten.Length > 0);
 			}
 
 			return container;

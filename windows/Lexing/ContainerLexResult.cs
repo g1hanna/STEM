@@ -36,7 +36,22 @@ namespace StemInterpretter.Lexing {
 			}
 		}
 
-		public int Length => ((ILexResult)_innerResults).Length;
+		public int Length {
+			get {
+				if (IsBeginningless()) return _innerResults.Length;
+				else if (IsInconclusive()) {
+					if (ContainerText != null) {
+						return ContainerText.Length;
+					}
+					else {
+						return _innerResults.Length;
+					}
+				}
+				else {
+					return _endResult.GetEnd() - Start;
+				}
+			}
+		}
 
 		public int Count => ((ICollection<ILexResult>)_innerResults).Count;
 
@@ -105,6 +120,7 @@ namespace StemInterpretter.Lexing {
 				_beginResult = _beginResult.Clone() as ILexResult,
 				_endResult = _endResult.Clone() as ILexResult,
 				_innerResults = _innerResults.Clone() as LexResultGroup,
+				ContainerText = ContainerText.Clone() as string,
 				MatchType = MatchType
 			};
 		}
@@ -183,6 +199,22 @@ namespace StemInterpretter.Lexing {
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
+		}
+
+		public ILexResult Offset(int offset)
+		{
+			ContainerLexResult copy = Clone() as ContainerLexResult;
+
+			copy._beginResult = copy._beginResult.Offset(offset);
+			copy._endResult = copy._endResult.Offset(offset);
+			copy._innerResults = copy._innerResults.Offset(offset);
+
+			return copy;
+		}
+
+		public ILexResult Move(int position)
+		{
+			return Offset(position - Start);
 		}
 		#endregion
 	}

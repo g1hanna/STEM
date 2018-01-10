@@ -18,4 +18,17 @@ namespace StemInterpretter.Lexing {
 		Program
 	}
 
+	public static class LexMatchTypeTools
+	{
+		public static bool IsNullable(this LexMatchType matchType) {
+			switch (matchType)
+			{
+				case LexMatchType.Null:
+					return true;
+				default:
+					return false;
+			}
+		}
+	}
+
 }

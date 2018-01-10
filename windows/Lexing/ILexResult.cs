@@ -9,6 +9,9 @@ namespace StemInterpretter.Lexing {
 		string Text { get; }
 		int Start { get; set; }
 		int Length { get; }
+
+		ILexResult Offset(int offset);
+		ILexResult Move(int position);
 	}
 
 	public static class ILexResultTools {
@@ -27,17 +30,6 @@ namespace StemInterpretter.Lexing {
 
 		public static bool IsInvalid(this ILexResult result) {
 			return result.MatchType == LexMatchType.Invalid;
-		}
-
-		public static ILexResult Move(this ILexResult result, int position) {
-			ILexResult movedResult = result.Clone() as ILexResult;
-
-			movedResult.Start = position;
-			return movedResult;
-		}
-
-		public static ILexResult Offset(this ILexResult result, int offset) {
-			return result.Move(result.Start + offset);
 		}
 
 		public static bool Overlaps(this ILexResult result, ILexResult target) {

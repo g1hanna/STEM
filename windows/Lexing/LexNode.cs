@@ -32,7 +32,20 @@ namespace StemInterpretter.Lexing {
 
 		public object Clone()
 		{
-			return new LexNode(MatchType, Start, Text);
+			return new LexNode(MatchType, Start, Text.Clone() as string);
+		}
+
+		public ILexResult Offset(int offset)
+		{
+			return Move(Start + offset);
+		}
+
+		public ILexResult Move(int position)
+		{
+			LexNode copy = (LexNode)Clone();
+			copy.Start = position;
+
+			return copy;
 		}
 	}
 

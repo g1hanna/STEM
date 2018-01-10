@@ -16,6 +16,23 @@ namespace StemInterpretter.Lexing {
 		public bool IsReadOnly => ((IList<ILexRule>)_rules).IsReadOnly;
 		#endregion
 
+		#region CONSTRUCTORS
+		public Lexer()
+		{
+			_rules = new List<ILexRule>();
+		}
+
+		public Lexer(IEnumerable<ILexRule> rules) : this()
+		{
+			AddMultiple(rules);
+		}
+
+		public Lexer(params ILexRule[] rules) : this(rules as IEnumerable<ILexRule>)
+		{
+			return;
+		}
+		#endregion
+
 		#region METHODS
 		#region ILIST<ILEXRULE> SUPPORT
 		public void Add(ILexRule item)
@@ -69,23 +86,37 @@ namespace StemInterpretter.Lexing {
 		}
 		#endregion
 		
+		public void AddMultiple(IEnumerable<ILexRule> rules)
+		{
+			foreach (ILexRule rule in rules) {
+				Add(rule);
+			}
+		}
+
+		public void AddMultiple(params ILexRule[] rules)
+		{
+			AddMultiple(rules as IEnumerable<ILexRule>);
+		}
+
 		public LexResultGroup Lex(string source)
 		{
 			LexResultGroup group = new LexResultGroup(LexMatchType.Program);
 
-			// match to the source per group
+			// match to the source per rule
 			foreach (ILexRule rule in _rules) {
 				string eaten = source.Clone() as string;
 				int offset = 0;
 
-				while (eaten.Length > 0)
+				do
 				{
 					ILexResult result = rule.Match(eaten);
 
 					if (result.IsSuccessful()) {
 						// add it to the group
 						ILexResult offsetResult = result.Offset(offset);
-						if (!group.Overlaps(offsetResult)) group.Add(offsetResult);
+						if (!group.Overlaps(offsetResult)) {
+							group.Add(offsetResult);
+						}
 
 						// eat the string to the end of the match
 						eaten = eaten.Remove(0, result.GetEnd());
@@ -107,6 +138,7 @@ namespace StemInterpretter.Lexing {
 						break;
 					}
 				}
+				while (eaten.Length > 0);
 			}
 
 			return group;

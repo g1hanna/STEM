@@ -30,7 +30,7 @@ namespace StemInterpretter.Lexing {
 		public int Length {
 			get {
 				// get the farthestmost result
-				var farthest = _matches.OrderByDescending(r => r.Start + r.Length).FirstOrDefault();
+				var farthest = _matches.OrderByDescending(r => r.GetEnd()).FirstOrDefault();
 
 				if (farthest == default(ILexResult) || farthest == null) {
 					// return 0 if no items
@@ -42,6 +42,8 @@ namespace StemInterpretter.Lexing {
 				}
 			}
 		}
+
+		public ILexResult this[int index] => _matches[index];
 		#endregion
 
 		#region CONSTRUCTORS
@@ -103,6 +105,24 @@ namespace StemInterpretter.Lexing {
 			return ((IList<ILexResult>)_matches).GetEnumerator();
 		}
 
+		public LexResultGroup Offset(int offset)
+		{
+			LexResultGroup copy = Clone() as LexResultGroup;
+
+			copy.Start += offset;
+
+			for (int i = 0; i < _matches.Count; i++) {
+				_matches[i].Start += offset;
+			}
+
+			return copy;
+		}
+
+		public LexResultGroup Move(int position)
+		{
+			return Offset(position - Start);
+		}
+
 		public bool Overlaps(ILexResult target)
 		{
 			foreach (var item in _matches) {
@@ -128,14 +148,31 @@ namespace StemInterpretter.Lexing {
 		{
 			List<ILexResult> matchesList = new List<ILexResult>();
 			foreach (var item in _matches) {
-				matchesList.Add(item);
+				matchesList.Add(item.Clone() as ILexResult);
 			}
 
 			return new LexResultGroup() {
 				_matches = matchesList,
-				MatchType = this.MatchType,
-				Start = this.Start
+				MatchType = MatchType,
+				Start = Start
 			};
+		}
+
+		ILexResult ILexResult.Offset(int offset)
+		{
+			LexResultGroup copy = Clone() as LexResultGroup;
+			copy.Start += offset;
+
+			for (int i = 0; i < copy._matches.Count; i++) {
+				copy._matches[i].Start += offset;
+			}
+
+			return copy;
+		}
+
+		ILexResult ILexResult.Move(int position)
+		{
+			return Offset(position - Start);
 		}
 		#endregion
 	}
