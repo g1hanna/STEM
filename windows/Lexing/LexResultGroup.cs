@@ -174,6 +174,18 @@ namespace StemInterpretter.Lexing {
 		{
 			return Offset(position - Start);
 		}
+
+		public bool OverlapsAt(int position, int length)
+		{
+			int end = position + length;
+			foreach (var result in _matches)
+			{
+				if (position > result.Start && position < result.GetEnd()) return true;
+				else if (end > result.Start && end < result.GetEnd()) return true;
+			}
+
+			return false;
+		}
 		#endregion
 	}
 

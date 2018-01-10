@@ -130,7 +130,7 @@ namespace LexingTest
 				}
 			);
 			// - literal integer
-			ILexRule intRule = new SimpleLexRule(LexMatchType.LitInt, "[0-9]+");
+			ILexRule intRule = new SimpleLexRule(LexMatchType.LitInt, "\\b[0-9]+\\b");
 			// - whitespace
 			ILexRule whitespaceRule = new SimpleLexRule(LexMatchType.Whitespace, "\\s+");
 			// - literal boolean
@@ -202,6 +202,19 @@ namespace LexingTest
 			Assert.AreEqual("\"My value is 972.987.\"", lexedSource[1].Text);
 			Assert.AreEqual("  ", lexedSource[2].Text);
 			Assert.AreEqual("972.987", lexedSource[3].Text);
+
+			// 4) unlexed
+			source = "645true";
+			lexedSource = myLexer.Lex(source);
+
+			Assert.AreEqual("645true", lexedSource[0].Text);
+			Assert.IsTrue(lexedSource[0].MatchType == LexMatchType.None);
+
+			source = "   true  samIAm   ";
+			lexedSource = myLexer.Lex(source);
+
+			Assert.AreEqual("samIAm", lexedSource[3].Text);
+			Assert.IsTrue(lexedSource[3].MatchType == LexMatchType.None);
 		}
 	}
 }

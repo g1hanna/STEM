@@ -19,9 +19,11 @@ Checked out: **parsing-ws1**
 ## Commits
 
 _Commits made throughout the project._
+_Enter "git log" in the terminal to see additional commit notes._
 
 | Date Created | Branch Name | Commit Description |
 | ------------ | ----------- | ------------------ |
+| 01.10.2017   | parsing-ws1 | Allowed lexer to add empty nodes for undigested text |
 | 01.10.2017   | parsing-ws1 | Set up ParsingTest project |
 | 01.10.2017   | parsing-ws1 | Established initial parsing framework |
 | 01.10.2017   | parsing-ws1 | Initial parsing commit |
