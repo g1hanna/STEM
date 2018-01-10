@@ -22,6 +22,7 @@ _Commits made throughout the project._
 
 | Date Created | Branch Name | Commit Description |
 | ------------ | ----------- | ------------------ |
+| 01.10.2017   | parsing-ws1 | Set up ParsingTest project |
 | 01.10.2017   | parsing-ws1 | Established initial parsing framework |
 | 01.10.2017   | parsing-ws1 | Initial parsing commit |
 | 01.09.2017   | lexing-ws1  | Completed lexer functionality and fixed ICloneables |

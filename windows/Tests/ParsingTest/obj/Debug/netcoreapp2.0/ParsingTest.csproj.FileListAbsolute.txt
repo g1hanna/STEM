@@ -1,0 +1,17 @@
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\bin\Debug\netcoreapp2.0\ParsingTest.deps.json
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\bin\Debug\netcoreapp2.0\ParsingTest.runtimeconfig.json
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\bin\Debug\netcoreapp2.0\ParsingTest.runtimeconfig.dev.json
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\bin\Debug\netcoreapp2.0\ParsingTest.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\bin\Debug\netcoreapp2.0\ParsingTest.pdb
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\obj\Debug\netcoreapp2.0\ParsingTest.csproj.CoreCompileInputs.cache
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\obj\Debug\netcoreapp2.0\ParsingTest.AssemblyInfoInputs.cache
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\obj\Debug\netcoreapp2.0\ParsingTest.AssemblyInfo.cs
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\obj\Debug\netcoreapp2.0\ParsingTest.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\obj\Debug\netcoreapp2.0\ParsingTest.pdb
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\bin\Debug\netcoreapp2.0\Lexing.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\bin\Debug\netcoreapp2.0\Parsing.dll
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\bin\Debug\netcoreapp2.0\Lexing.pdb
+C:\Users\G1HannaMax\CodeSpace\Projects\Stem\windows\Tests\ParsingTest\bin\Debug\netcoreapp2.0\Parsing.pdb
