@@ -4,13 +4,14 @@ using System.Collections.Generic;
 
 namespace StemInterpretter.Lexing {
 
-	public class ContainerLexRule : ILexRule, ICollection<ILexRule>
+	public class ContainerLexRule : ILexGroupRule, ICollection<ILexRule>
 	{
 		#region FIELDS
 		private IList<ILexRule> _innerRules;
 		private ILexRule _beginRule;
 		private ILexRule _endRule;
 		private LexMatchType _matchType;
+		private bool _requiresFilledSpace;
 		#endregion
 
 		#region PROPERTIES
@@ -19,19 +20,27 @@ namespace StemInterpretter.Lexing {
 		public bool IsReadOnly => _innerRules.IsReadOnly;
 		public ILexRule BeginRule { get => _beginRule; set => _beginRule = value; }
 		public ILexRule EndRule { get => _endRule; set => _endRule = value; }
+		public bool RequiresFilledSpace { get => _requiresFilledSpace; set => _requiresFilledSpace = value; }
 		#endregion
 
 		#region CONSTRUCTORS
-		public ContainerLexRule(LexMatchType matchType, ILexRule beginRule, ILexRule endRule)
+		public ContainerLexRule(LexMatchType matchType, ILexRule beginRule, ILexRule endRule, bool requiresFilledSpace)
 		{
 			_matchType = matchType;
 			_beginRule = beginRule;
 			_endRule = endRule;
 			_innerRules = new List<ILexRule>();
+			_requiresFilledSpace = requiresFilledSpace;
+		}
+
+		public ContainerLexRule(LexMatchType matchType, ILexRule beginRule, ILexRule endRule)
+		: this(matchType, beginRule, endRule, false)
+		{
+			return;
 		}
 
 		public ContainerLexRule(LexMatchType matchType)
-		: this(matchType, null, null)
+		: this(matchType, null, null, false)
 		{
 			return;
 		}
@@ -106,6 +115,21 @@ namespace StemInterpretter.Lexing {
 		}
 
 		public ILexResult Match(string target)
+		{
+			return Match(target, RequiresFilledSpace);
+		}
+
+		public bool Remove(ILexRule item)
+		{
+			return _innerRules.Remove(item);
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return this.GetEnumerator();
+		}
+
+		public ILexResult Match(string target, bool insertEmptyNodes)
 		{
 			ContainerLexResult container = new ContainerLexResult(_matchType);
 			string eaten = target.Clone() as string;
@@ -182,17 +206,9 @@ namespace StemInterpretter.Lexing {
 				while (ruleEaten.Length > 0);
 			}
 
+			if (insertEmptyNodes) container.AddEmptyNodes();
+
 			return container;
-		}
-
-		public bool Remove(ILexRule item)
-		{
-			return _innerRules.Remove(item);
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this.GetEnumerator();
 		}
 		#endregion
 	}

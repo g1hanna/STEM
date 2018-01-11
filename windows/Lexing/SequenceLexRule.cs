@@ -57,6 +57,7 @@ namespace StemInterpretter.Lexing {
 			if (_rules.Count == 0) return LexNode.NoMatch;
 
 			LexResultGroup group = new LexResultGroup(MatchType);
+			group.RequiresFilledSpace = true;
 
 			// get first match, then offset
 			ILexResult firstResult = _rules[0].Match(target);

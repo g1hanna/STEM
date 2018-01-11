@@ -1,3 +1,4 @@
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StemInterpretter.Lexing;
 
@@ -6,6 +7,18 @@ namespace LexingTest
 	[TestClass]
 	public class LexingTest
 	{
+		// This was for recalling the results of
+		// string.PadLeft(int) and string.PadRight(int).
+
+		// [TestMethod]
+		// public void StringTest()
+		// {
+		// 	string myString = "I am a string!";
+
+		// 	Assert.AreEqual("    I am a string!", myString.PadLeft(18));
+		// 	Assert.AreEqual("I am a string!    ", myString.PadRight(18));
+		// }
+
 		[TestMethod]
 		public void EmptyLexTest()
 		{
@@ -50,7 +63,7 @@ namespace LexingTest
 
 			ILexResult result = whitespaceRule.Match(source);
 
-			Assert.AreEqual(result.Text, expected);
+			Assert.AreEqual(expected, result.Text);
 		}
 
 		[TestMethod]
@@ -76,7 +89,7 @@ namespace LexingTest
 
 			result = boolRule.Match(source);
 
-			Assert.AreEqual(result.Text, expected);
+			Assert.AreEqual(expected, result.Text);
 		}
 
 		[TestMethod]
@@ -94,7 +107,7 @@ namespace LexingTest
 
 			ILexResult result = floatRule.Match(source);
 
-			Assert.AreEqual(result.Text, expected);
+			Assert.AreEqual(expected, result.Text);
 		}
 
 		[TestMethod]
@@ -172,7 +185,7 @@ namespace LexingTest
 			// prepare general variables
 			string source;
 			string expected;
-			LexResultGroup lexedSource;
+			ILexResultGroup lexedSource;
 
 			// test vigorously
 			// 1) null

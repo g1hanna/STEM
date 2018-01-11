@@ -23,6 +23,7 @@ _Enter "git log" in the terminal to see additional commit notes._
 
 | Date Created | Branch Name | Commit Description |
 | ------------ | ----------- | ------------------ |
+| 01.11.2017   | parsing-ws1 | Fixed and improved lexing functionality |
 | 01.10.2017   | parsing-ws1 | Allowed lexer to add empty nodes for undigested text |
 | 01.10.2017   | parsing-ws1 | Set up ParsingTest project |
 | 01.10.2017   | parsing-ws1 | Established initial parsing framework |

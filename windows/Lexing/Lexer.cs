@@ -101,6 +101,7 @@ namespace StemInterpretter.Lexing {
 		public LexResultGroup Lex(string source, bool addEmptyNodes)
 		{
 			LexResultGroup group = new LexResultGroup(LexMatchType.Program);
+			group.ContainerText = source;
 
 			// match to the source per rule
 			foreach (ILexRule rule in _rules) {
@@ -143,51 +144,7 @@ namespace StemInterpretter.Lexing {
 
 			if (addEmptyNodes)
 			{
-				// add empty nodes to empty slots
-				int end = source.Length;
-				for (int i = 0; i < end; i++)
-				{
-					bool placeEmpty = false;
-					for (int j = 0; j + i <= end; j++)
-					{
-						if (group.OverlapsAt(i, j))
-						{
-							if (placeEmpty)
-							{
-								LexNode emptyNode = LexNode.NoMatch;
-								emptyNode.Start = i;
-								emptyNode.Text = source.Substring(i, j - 1);
-
-								group.Add(emptyNode);
-
-								i += j;
-							}
-
-							break;
-						}
-						else if (i + j == end)
-						{
-							if (placeEmpty)
-							{
-								LexNode emptyNode = LexNode.NoMatch;
-								emptyNode.Start = i;
-								emptyNode.Text = source.Substring(i, j);
-
-								group.Add(emptyNode);
-
-								i += j;
-							}
-
-							break;
-						}
-						else
-						{
-							if (j > 0 && !placeEmpty) placeEmpty = true;
-
-							continue;
-						}
-					}
-				}
+				group.AddEmptyNodes();
 			}
 
 			return group;

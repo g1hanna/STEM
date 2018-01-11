@@ -5,34 +5,37 @@ using System.Linq;
 
 namespace StemInterpretter.Lexing {
 
-	public class ContainerLexResult : ILexResult, ICollection<ILexResult> {
+	public class ContainerLexResult : ILexResultGroup
+	{
 		#region FIELDS AND AUTOS
-		private LexResultGroup _innerResults;
+		private ILexResultGroup _innerResults;
 		private ILexResult _beginResult;
 		private ILexResult _endResult;
-		public string ContainerText { get; set; }
 		public LexMatchType MatchType { get; set; }
 		#endregion
 
 		#region PROPERTIES
+		private ILexResultGroup innerResults {
+			get => _innerResults;
+			set {
+				_innerResults = value;
+
+				snapResults();
+			}
+		}
+
+		public string ContainerText {
+			get => innerResults.ContainerText;
+			set {
+				innerResults.ContainerText = value;
+
+				snapResults();
+			}
+		}
+
 		public string Text {
 			get {
-				string result = "";
-
-				// add beginning result text first
-				result = result.Insert(0, _beginResult.Text);
-
-				if (string.IsNullOrEmpty(ContainerText)) {
-					result = result.Insert(result.Length, _innerResults.Text);
-				}
-				else {
-					result = result.Insert(result.Length, ContainerText);
-				}
-
-				// add ending result text last
-				result = result.Insert(result.Length, _endResult.Text);
-
-				return result;
+				return $"{BeginResult.Text}{innerResults.Text}{EndResult.Text}"; 
 			}
 		}
 
@@ -41,26 +44,66 @@ namespace StemInterpretter.Lexing {
 				if (IsBeginningless()) return _innerResults.Length;
 				else if (IsInconclusive()) {
 					if (ContainerText != null) {
-						return ContainerText.Length;
+						return ContainerText.Length + _beginResult.Length + Start;
 					}
 					else {
 						return _innerResults.Length;
 					}
 				}
 				else {
-					return _endResult.GetEnd() - Start;
+					int length = _endResult.GetEnd() - Start;
+					return length;
 				}
 			}
 		}
 
-		public int Count => ((ICollection<ILexResult>)_innerResults).Count;
+		public int Count => ((ICollection<ILexResult>)_innerResults).Count + 2;
 
 		public bool IsReadOnly => ((ICollection<ILexResult>)_innerResults).IsReadOnly;
 
-		public ILexResult BeginResult { get => _beginResult; set => _beginResult = value; }
-		public ILexResult EndResult { get => _endResult; set => _endResult = value; }
-		public int Start { get => _beginResult.Start; set => _beginResult.Start = value; }
+		public ILexResult BeginResult {
+			get => _beginResult;
+			set {
+				_beginResult = value;
 
+				snapResults();
+			}
+		}
+		public ILexResult EndResult {
+			get => _endResult;
+			set {
+				_endResult = value;
+
+				snapResults();
+			}
+		}
+		public int Start {
+			get => BeginResult.Start;
+			set {
+				BeginResult.Start = value;
+
+				snapResults();
+			}
+		}
+
+		public bool RequiresFilledSpace 
+		{
+			get => _innerResults.RequiresFilledSpace;
+			set => _innerResults.RequiresFilledSpace = value;
+		}
+
+		public ILexResult this[int index] {
+			get {
+				int count = Count;
+
+				// return begin result as first item
+				if (index == 0) return _beginResult;
+				// return end result as last item
+				else if (index == count - 1) return _endResult;
+				// else, return from inner results
+				else return _innerResults[index];
+			}
+		}
 		#endregion
 
 		#region CONSTRUCTORS
@@ -68,14 +111,23 @@ namespace StemInterpretter.Lexing {
 		{
 			return;
 		}
-		
-		public ContainerLexResult(LexMatchType matchType, ILexResult beginResult, ILexResult endResult, string containerText)
+
+		public ContainerLexResult(LexMatchType matchType, ILexResult beginResult, ILexResult endResult,
+			string containerText, bool requiresFilledSpace)
 		{
 			MatchType = matchType;
 			_beginResult = beginResult;
 			_endResult = endResult;
 			_innerResults = new LexResultGroup(MatchType, Start);
+
 			ContainerText = containerText;
+			RequiresFilledSpace = requiresFilledSpace;
+		}
+		
+		public ContainerLexResult(LexMatchType matchType, ILexResult beginResult, ILexResult endResult, string containerText)
+		: this(matchType, beginResult, endResult, containerText, false)
+		{
+			return;
 		}
 
 		public ContainerLexResult(LexMatchType matchType, ILexResult beginResult, ILexResult endResult)
@@ -84,29 +136,57 @@ namespace StemInterpretter.Lexing {
 			return;
 		}
 
-		public ContainerLexResult(LexMatchType matchType, int start)
+		public ContainerLexResult(LexMatchType matchType, int start, string containerText, bool requiresFilledSpace)
 		{
+			// set fields and auto-implemented properties first
 			MatchType = matchType;
 			_beginResult = LexNode.NoMatch;
 			_endResult = LexNode.NoMatch;
+			_innerResults = new LexResultGroup(MatchType, start);
 
 			Start = start;
-			_innerResults = new LexResultGroup(MatchType, start);
+			ContainerText = containerText;
+		}
+
+		public ContainerLexResult(LexMatchType matchType, int start, string containerText)
+		: this(matchType, start, containerText, false)
+		{
+			return;
+		}
+
+		public ContainerLexResult(LexMatchType matchType, int start)
+		: this(matchType, start, "")
+		{
+			return;
 		}
 
 		public ContainerLexResult(LexMatchType matchType)
-		: this(matchType, 0)
+		: this(matchType, 0, "")
 		{
 			return;
 		}
 		#endregion
 
 		#region METHODS
-		public void Add(ILexResult item)
+		private void snapResults()
 		{
-			if (overlapsBoundaries(item)) return;
+			_innerResults.Start = _beginResult.GetEnd();
 
-			((ICollection<ILexResult>)_innerResults).Add(item);
+			_endResult.Start = innerResults.GetEnd();
+		}
+
+		public bool Add(ILexResult item)
+		{
+			if (overlapsBoundaries(item)) return false;
+
+			if (!_innerResults.IsInside(item)) return false;
+
+			return _innerResults.Add(item);
+		}
+
+		void ICollection<ILexResult>.Add(ILexResult item)
+		{
+			Add(item);
 		}
 
 		public void Clear()
@@ -116,13 +196,16 @@ namespace StemInterpretter.Lexing {
 
 		public object Clone()
 		{
-			return new ContainerLexResult() {
+			ContainerLexResult clone = new ContainerLexResult() {
 				_beginResult = _beginResult.Clone() as ILexResult,
 				_endResult = _endResult.Clone() as ILexResult,
 				_innerResults = _innerResults.Clone() as LexResultGroup,
-				ContainerText = ContainerText.Clone() as string,
 				MatchType = MatchType
 			};
+			
+			clone.snapResults();
+
+			return clone;
 		}
 
 		private ICollection<ILexResult> getAllResults() {
@@ -191,7 +274,7 @@ namespace StemInterpretter.Lexing {
 			return ((ICollection<ILexResult>)_innerResults).Remove(item);
 		}
 
-		public LexResultGroup ToGroup()
+		public ILexResultGroup ToGroup()
 		{
 			return (Clone() as ContainerLexResult)._innerResults;
 		}
@@ -207,7 +290,7 @@ namespace StemInterpretter.Lexing {
 
 			copy._beginResult = copy._beginResult.Offset(offset);
 			copy._endResult = copy._endResult.Offset(offset);
-			copy._innerResults = copy._innerResults.Offset(offset);
+			copy._innerResults = copy._innerResults.Offset(offset) as ILexResultGroup;
 
 			return copy;
 		}
@@ -215,6 +298,18 @@ namespace StemInterpretter.Lexing {
 		public ILexResult Move(int position)
 		{
 			return Offset(position - Start);
+		}
+
+		public bool AddEmptyNodes()
+		{
+			return _innerResults.AddEmptyNodes();
+		}
+
+		public bool OverlapsAt(int position, int length)
+		{
+			if (_beginResult.OverlapsAt(position, length)) return true;
+			else if (_endResult.OverlapsAt(position, length)) return true;
+			else return ((ILexResultGroup)_innerResults).OverlapsAt(position, length);
 		}
 		#endregion
 	}
