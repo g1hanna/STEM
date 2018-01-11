@@ -74,6 +74,9 @@ namespace StemInterpretter.Parsing
 		#endregion
 
 		#region METHODS
+		#region STATIC
+		#endregion
+
 		#region ILIST<IASTNODE> SUPPORT
 		public void Add(ASTNode item)
 		{
@@ -116,12 +119,9 @@ namespace StemInterpretter.Parsing
 		
 		private void sort()
 		{
+			// use existing compare functions to simplify sorting
 			_children.Sort(
-				(ast1, ast2) => {
-					if (ast1.Start > ast2.Start) return 1;
-					else if (ast1.Start < ast2.Start) return -1;
-					else return 0;
-				}
+				(ast1, ast2) =>  ast1.Start.CompareTo(ast2.Start)
 			);
 		}
 

@@ -4,6 +4,8 @@ namespace StemInterpretter.Parsing
 	{
 		None,
 		Ignore,
-		Invalid
+		Invalid,
+		Program,
+		Expression
 	}
 }

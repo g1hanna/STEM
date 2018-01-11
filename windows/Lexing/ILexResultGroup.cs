@@ -43,7 +43,7 @@ namespace StemInterpretter.Lexing {
 			if (position > result.Start && position < result.GetEnd()) {
 				return true;
 			}
-			else if (end > result.Start && end < result.GetEnd()) {
+			else if (end > result.Start && end <= result.GetEnd()) {
 				return true;
 			}
 			else {

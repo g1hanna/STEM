@@ -184,7 +184,7 @@ namespace StemInterpretter.Lexing {
 					}
 					else {
 						// add an offset result to the container
-						ILexResult offsetResult = result.Offset(offset);
+						ILexResult offsetResult = result.Offset(ruleOffset);
 						if (!container.Overlaps(offsetResult))
 							container.Add(offsetResult);
 
