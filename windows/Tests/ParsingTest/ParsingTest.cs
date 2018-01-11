@@ -10,7 +10,7 @@ namespace StemInterpretter.Tests.Parsing
 		private Lexer _testLexer;
 
 		[TestInitialize]
-		public void InitParsingTest()
+		public void Init()
 		{
 			#region INIT LEX RULES
 			// initialize lex rules
@@ -94,28 +94,26 @@ namespace StemInterpretter.Tests.Parsing
 		{
 			LexResultGroup lexedSource = _testLexer.Lex("\"I have a \\\"thing\\\" for you.\" 33.45");
 
-			LexResultValidator checker = lexed => lexed.MatchType == LexMatchType.Program && lexed is LexResultGroup;
-			LexResultParser parser = lexed => {
-				ASTNode programNode = new ASTNode(ParseMatchType.Program, lexed);
-				LexResultGroup group = lexed as LexResultGroup;
+			ParseRule expressionRule = new ParseRule(
+				l => new ParseResult(ParseStatus.Success, new ASTNode(ParseMatchType.Expression, l)),
+				l => l.MatchType != LexMatchType.Whitespace && l.MatchType != LexMatchType.None
+			);
+			ParseRule ignoreRule = new ParseRule(
+				l => new ParseResult(ParseStatus.Success, new ASTNode(ParseMatchType.Ignore, l)),
+				l => l.MatchType == LexMatchType.Whitespace
+			);
+			ParseRule unlexedRule = new ParseRule(
+				l => DetailedParseResult.CreateError(
+					new ASTNode(ParseMatchType.None, l),
+					$"Unlexed token `{l.Text}' detected at character {l.Start}."
+				),
+				l => l.MatchType == LexMatchType.Whitespace
+			);
 
-				foreach (ILexResult item in group) {
-					ASTNode node = new ASTNode(item);
-
-					if (item.MatchType != LexMatchType.Whitespace && item.MatchType != LexMatchType.Null) {
-						node.MatchType = ParseMatchType.Expression;
-					}
-					else {
-						node.MatchType = ParseMatchType.Ignore;
-					}
-
-					programNode.Add(node);
-				}
-
-				return new ParseResult(ParseStatus.Success, programNode);
-			};
-
-			IParseRule programRule = new ParseRule(parser, checker);
+			ContainerParseRule programRule = new ContainerParseRule(ParseMatchType.Program, LexMatchType.Program);
+			programRule.Add(unlexedRule);
+			programRule.Add(expressionRule);
+			programRule.Add(ignoreRule);
 
 			IParseResult result = programRule.Parse(lexedSource);
 
@@ -130,7 +128,7 @@ namespace StemInterpretter.Tests.Parsing
 		}
 
 		[TestCleanup]
-		public void DisposeParsingTest()
+		public void Cleanup()
 		{
 			_testLexer.Clear();
 
