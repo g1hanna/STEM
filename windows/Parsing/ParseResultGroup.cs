@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using StemInterpretter.Lexing;
 
 namespace StemInterpretter.Parsing
@@ -8,12 +9,13 @@ namespace StemInterpretter.Parsing
 	public class ParseResultGroup : IParseResultGroup
 	{
 		#region FIELDS AND AUTOS
-		private ICollection<IParseResult> _results;
+		private IList<IParseResult> _results;
 		public ParseStatus Status { get; set; }
 		public ASTNode Node { get; set; }
 		#endregion
 
 		#region PROPERTIES
+		public IParseResult this[int index] => _results.OrderBy(pr => pr.Start).ElementAt(index);
 		public int Count => _results.Count;
 		public bool IsReadOnly => _results.IsReadOnly;
 		public int Start { get => Node.Start; set => Node.Start = value; }
@@ -26,7 +28,7 @@ namespace StemInterpretter.Parsing
 			return;
 		}
 
-		public ParseResultGroup(ParseStatus status, ASTNode node, ICollection<IParseResult> results)
+		public ParseResultGroup(ParseStatus status, ASTNode node, IList<IParseResult> results)
 		{
 			Status = status;
 			Node = node;
@@ -70,7 +72,7 @@ namespace StemInterpretter.Parsing
 
 		public object Clone(bool cloneContents)
 		{
-			ICollection<IParseResult> results = new List<IParseResult>();
+			IList<IParseResult> results = new List<IParseResult>();
 			
 			// add duplicates of this object's results
 			if (cloneContents)

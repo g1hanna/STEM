@@ -7,7 +7,7 @@ namespace StemInterpretter.Parsing
 
 	public interface IParseRule
 	{
-		ParseMatchType MatchType { get; set; }
+		ParseMatchType MatchType { get; }
 
 		bool Accepts(ILexResult target);
 		IParseResult Parse(ILexResult target);

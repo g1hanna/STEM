@@ -7,6 +7,8 @@ namespace StemInterpretter.Parsing
 {
 	public interface IParseResultGroup : IParseResult, ICollection<IParseResult>
 	{
+		IParseResult this[int index] { get; }
+
 		IParseResult Find(Func<IParseResult, bool> selector);
 		IParseResult[] FindAll(Func<IParseResult, bool> selector);
 		bool Remove(Func<IParseResult, bool> selector);

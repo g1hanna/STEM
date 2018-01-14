@@ -7,26 +7,32 @@ namespace StemInterpretter.Parsing
 
 	public class ParseRule : IParseRule
 	{
-		#region FIELDS
+		#region FIELDS AND AUTOS
 		private LexResultValidator _validator;
 		private LexResultParser _parsePattern;
-		private ParseMatchType _matchType;
+		public ParseMatchType MatchType { get; set; }
 		#endregion
 
 		#region PROPERTIES
 		public LexResultValidator Validator { get => _validator; set => _validator = value; }
 		public LexResultParser ParsePattern { get => _parsePattern; set => _parsePattern = value; }
-		public ParseMatchType MatchType { get => _matchType; set => _matchType = value; }
 		#endregion
 
 		#region CONSTRUCTORS
-		public ParseRule(LexResultParser parseLogic, LexResultValidator validator)
+		public ParseRule(LexResultValidator validator, LexResultParser parseLogic)
+		: this(ParseMatchType.None, validator, parseLogic)
+		{
+			return;
+		}
+
+		public ParseRule(ParseMatchType matchType, LexResultValidator validator, LexResultParser parseLogic)
 		{
 			if (parseLogic == null || validator == null)
 			{
 				throw new ArgumentNullException("A parse rule cannot have null parse patterns or validators.");
 			}
 
+			MatchType = matchType;
 			_parsePattern = parseLogic;
 			_validator = validator;
 		}

@@ -82,7 +82,7 @@ namespace StemInterpretter.Tests.Parsing
 				);
 			};
 
-			IParseRule unlexedTokenRule = new ParseRule(parser, checker);
+			IParseRule unlexedTokenRule = new ParseRule(checker, parser);
 
 			DetailedParseResult result = unlexedTokenRule.Parse(lexedSource[1]) as DetailedParseResult;
 
@@ -95,19 +95,19 @@ namespace StemInterpretter.Tests.Parsing
 			LexResultGroup lexedSource = _testLexer.Lex("\"I have a \\\"thing\\\" for you.\" 33.45");
 
 			ParseRule expressionRule = new ParseRule(
-				l => new ParseResult(ParseStatus.Success, new ASTNode(ParseMatchType.Expression, l)),
-				l => l.MatchType != LexMatchType.Whitespace && l.MatchType != LexMatchType.None
+				l => l.MatchType != LexMatchType.Whitespace && l.MatchType != LexMatchType.None,
+				l => new ParseResult(ParseStatus.Success, new ASTNode(ParseMatchType.Expression, l))
 			);
 			ParseRule ignoreRule = new ParseRule(
-				l => new ParseResult(ParseStatus.Success, new ASTNode(ParseMatchType.Ignore, l)),
-				l => l.MatchType == LexMatchType.Whitespace
+				l => l.MatchType == LexMatchType.Whitespace,
+				l => new ParseResult(ParseStatus.Success, new ASTNode(ParseMatchType.Ignore, l))
 			);
 			ParseRule unlexedRule = new ParseRule(
+				l => l.MatchType == LexMatchType.None,
 				l => DetailedParseResult.CreateError(
-					new ASTNode(ParseMatchType.None, l),
+					new ASTNode(ParseMatchType.Invalid, l),
 					$"Unlexed token `{l.Text}' detected at character {l.Start}."
-				),
-				l => l.MatchType == LexMatchType.Whitespace
+				)
 			);
 
 			ContainerParseRule programRule = new ContainerParseRule(ParseMatchType.Program, LexMatchType.Program);
@@ -125,6 +125,52 @@ namespace StemInterpretter.Tests.Parsing
 
 			Assert.AreEqual("33.45", result.Node[2].Text);
 			Assert.IsTrue(result.Node[2].MatchType == ParseMatchType.Expression);
+		}
+
+		[TestMethod]
+		public void ParserRuleTest()
+		{
+			// initialize parser and parse rules
+			ParseRule expressionRule = new ParseRule(
+				ParseMatchType.Expression,
+				l => l.MatchType != LexMatchType.Whitespace && l.MatchType != LexMatchType.None,
+				l => new ParseResult(ParseStatus.Success, new ASTNode(ParseMatchType.Expression, l))
+			);
+			ParseRule ignoreRule = new ParseRule(
+				ParseMatchType.Ignore,
+				l => l.MatchType == LexMatchType.Whitespace,
+				l => new ParseResult(ParseStatus.Success, new ASTNode(ParseMatchType.Ignore, l))
+			);
+			ParseRule unlexedRule = new ParseRule(
+				ParseMatchType.Invalid,
+				l => l.MatchType == LexMatchType.None,
+				l => DetailedParseResult.CreateError(
+					new ASTNode(ParseMatchType.Invalid, l),
+					$"Unlexed token `{l.Text}' detected at character {l.Start}."
+				)
+			);
+
+			Parser myParser = new Parser();
+			IParseResultGroup parsedSource;
+
+			// lex the source
+			LexResultGroup lexedSource = _testLexer.Lex("\"That\" 1 true 23.9  !");
+
+			// test vigorously
+			// Test 1: No rules
+			parsedSource = myParser.Parse(lexedSource);
+
+			Assert.IsTrue(parsedSource.Count == 0);
+
+			// Test 2: With rules added
+			myParser.AddMultiple(unlexedRule, expressionRule, ignoreRule);
+			parsedSource = myParser.Parse(lexedSource);
+
+			Assert.AreEqual("\"That\"", parsedSource[0].Node.Text);
+			Assert.IsTrue(parsedSource[0].GetMatchType() == ParseMatchType.Expression);
+
+			Assert.AreEqual("!", parsedSource[8].Node.Text);
+			Assert.IsTrue(parsedSource[8].GetMatchType() == ParseMatchType.Invalid);
 		}
 
 		[TestCleanup]
