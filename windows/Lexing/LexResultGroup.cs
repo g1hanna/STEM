@@ -237,11 +237,14 @@ namespace StemInterpretter.Lexing {
 			int end = Text.Length;
 			for (int i = 0; i < end; i++)
 			{
+				bool spaceClear = false;
 				bool placeEmpty = false;
 				for (int j = 0; j + i <= end; j++)
 				{
 					if (OverlapsAt(i, j))
 					{
+						spaceClear = false;
+
 						if (placeEmpty)
 						{
 							if (!slotsAdded) slotsAdded = true;
@@ -259,7 +262,7 @@ namespace StemInterpretter.Lexing {
 					}
 					else if (i + j == end)
 					{
-						if (placeEmpty)
+						if (spaceClear)
 						{
 							if (!slotsAdded) slotsAdded = true;
 
@@ -276,7 +279,9 @@ namespace StemInterpretter.Lexing {
 					}
 					else
 					{
-						if (j > 0 && !placeEmpty) placeEmpty = true;
+						spaceClear = true;
+
+						if (j > 0 && spaceClear && !placeEmpty) placeEmpty = true;
 
 						continue;
 					}

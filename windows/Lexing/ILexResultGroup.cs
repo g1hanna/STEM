@@ -40,14 +40,18 @@ namespace StemInterpretter.Lexing {
 		{
 			int end = position + length;
 
-			if (position > result.Start && position < result.GetEnd()) {
-				return true;
+			// has some length
+			if (length > 0) {
+				return ((position >= result.Start && position < result.GetEnd())
+				|| (end > result.Start && end <= result.GetEnd()));
 			}
-			else if (end > result.Start && end <= result.GetEnd()) {
-				return true;
+			// zero-length nodes
+			else if (length == 0) {
+				return (position > result.Start && position < result.GetEnd());
 			}
+			// negative lengths canceled
 			else {
-				return false;
+				throw new InvalidOperationException("Negative lengths not allowed.");
 			}
 		}
 	}

@@ -23,6 +23,7 @@ _Enter "git log" in the terminal to see additional commit notes._
 
 | Date Created | Branch Name | Commit Description |
 | ------------ | ----------- | ------------------ |
+| 01.14.2017   | parsing-ws1 | Fixed overseen lexing bugs and confirmed full lexer functionality |
 | 01.11.2017   | parsing-ws1 | Refactored and added container parse rule functionality |
 | 01.11.2017   | parsing-ws1 | Fixed ContainerLexRule and ensured parse rule functionality |
 | 01.11.2017   | parsing-ws1 | Fixed and improved lexing functionality |

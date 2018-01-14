@@ -228,6 +228,16 @@ namespace LexingTest
 
 			Assert.AreEqual("samIAm", lexedSource[3].Text);
 			Assert.IsTrue(lexedSource[3].MatchType == LexMatchType.None);
+
+			// 5) ensure the lexer doesn't stop at first mismatch
+			source = "\"That\" 1 true 23.9  !";
+			lexedSource = myLexer.Lex(source);
+
+			Assert.AreEqual("23.9", lexedSource[6].Text);
+			Assert.IsTrue(lexedSource[6].MatchType == LexMatchType.LitFloat);
+
+			Assert.AreEqual("!", lexedSource[8].Text);
+			Assert.IsTrue(lexedSource[8].MatchType == LexMatchType.None);
 		}
 	}
 }

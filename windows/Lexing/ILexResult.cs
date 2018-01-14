@@ -31,6 +31,10 @@ namespace StemInterpretter.Lexing {
 		public static bool IsInvalid(this ILexResult result) {
 			return result.MatchType == LexMatchType.Invalid;
 		}
+
+		public static bool IsPartial(this ILexResult result) {
+			return result.MatchType == LexMatchType.Partial;
+		}
 	}
 
 }

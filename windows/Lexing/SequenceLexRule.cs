@@ -61,7 +61,8 @@ namespace StemInterpretter.Lexing {
 
 			// get first match, then offset
 			ILexResult firstResult = _rules[0].Match(target);
-			if (!firstResult.IsSuccessful()) return LexNode.NoMatch;
+			if (!firstResult.IsSuccessful())
+				return LexNode.NoMatch;
 			
 			string eaten = target.Clone() as string;
 
@@ -80,7 +81,8 @@ namespace StemInterpretter.Lexing {
 				if (result.IsSuccessful()) {
 					// matches must be "squared up"
 					if (result.Start != 0) {
-						return LexNode.NoMatch;
+						// wrap group as a partial result
+						return LayeredLexNode.CreatePartial(group);
 					}
 					else {
 						// eat the string

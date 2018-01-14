@@ -32,6 +32,13 @@ namespace StemInterpretter.Lexing {
 		#endregion
 
 		#region METHODS
+		#region STATIC
+		public static LayeredLexNode CreatePartial(ILexResult unfinished)
+		{
+			return new LayeredLexNode(LexMatchType.Partial, unfinished);
+		}
+		#endregion
+
 		public object Clone() => new LayeredLexNode(MatchType, _node.Clone() as ILexResult);
 
 		public ILexResult Offset(int offset)

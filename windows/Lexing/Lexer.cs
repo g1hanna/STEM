@@ -113,10 +113,13 @@ namespace StemInterpretter.Lexing {
 					ILexResult result = rule.Match(eaten);
 
 					if (result.IsSuccessful()) {
-						// add it to the group
-						ILexResult offsetResult = result.Offset(offset);
-						if (!group.Overlaps(offsetResult)) {
-							group.Add(offsetResult);
+						// don't add if partial result
+						if (!result.IsPartial()) {
+							// add it to the group
+							ILexResult offsetResult = result.Offset(offset);
+							if (!group.Overlaps(offsetResult)) {
+								group.Add(offsetResult);
+							}
 						}
 
 						// eat the string to the end of the match
