@@ -6,10 +6,11 @@ _Contains information regarding the sprint's Git repository._
 
 _Git Branches used in the project._
 
-Checked out: **win-sprint1**
+Checked out: **exec-ws1**
 
 | Date Created | Branch Name |
 | ------------ | ----------- |
+| 01.14.2018   | exec-ws1    |
 | 01.10.2018   | parsing-ws1 |
 | 01.09.2018   | lexing-ws1  |
 | 01.09.2018   | win-sprint1 |
@@ -23,6 +24,8 @@ _Enter "git log" in the terminal to see additional commit notes._
 
 | Date Created | Branch Name | Commit Description |
 | ------------ | ----------- | ------------------ |
+| 01.14.2018   | exec-ws1    | Initial execution commit |
+| 01.14.2018   | win-sprint1 | Changed '2017' in Sprint 1 Gitlog to '2018' |
 | 01.14.2018   | win-sprint1 | Added a VSCode workspace for windows folder |
 | 01.14.2018   | parsing-ws1 | Alpha build of parser complete and tested |
 | 01.14.2018   | parsing-ws1 | Fixed overseen lexing bugs and confirmed full lexer functionality |

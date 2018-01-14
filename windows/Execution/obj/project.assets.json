@@ -25,6 +25,29 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "Lexing/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/Lexing.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Lexing.dll": {}
+        }
+      },
+      "Parsing/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Lexing": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Parsing.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Parsing.dll": {}
+        }
       }
     }
   },
@@ -169,11 +192,23 @@
         "netstandard.library.2.0.0.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
+    },
+    "Lexing/1.0.0": {
+      "type": "project",
+      "path": "../Lexing/Lexing.csproj",
+      "msbuildProject": "../Lexing/Lexing.csproj"
+    },
+    "Parsing/1.0.0": {
+      "type": "project",
+      "path": "../Parsing/Parsing.csproj",
+      "msbuildProject": "../Parsing/Parsing.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "NETStandard.Library >= 2.0.0"
+      "Lexing >= 1.0.0",
+      "NETStandard.Library >= 2.0.0",
+      "Parsing >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -205,7 +240,14 @@
       },
       "frameworks": {
         "netstandard2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\G1HannaMax\\CodeSpace\\Projects\\Stem\\windows\\Lexing\\Lexing.csproj": {
+              "projectPath": "C:\\Users\\G1HannaMax\\CodeSpace\\Projects\\Stem\\windows\\Lexing\\Lexing.csproj"
+            },
+            "C:\\Users\\G1HannaMax\\CodeSpace\\Projects\\Stem\\windows\\Parsing\\Parsing.csproj": {
+              "projectPath": "C:\\Users\\G1HannaMax\\CodeSpace\\Projects\\Stem\\windows\\Parsing\\Parsing.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
