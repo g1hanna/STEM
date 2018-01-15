@@ -1,0 +1,96 @@
+\\ This is a comment.
+
+\* This is a 
+	multi-line comment. *\
+
+\\ Variable Declaration
+\\ - Variables
+$myNum = -34;					\\ Integer (signed integer)
+$mySize = 89;					\\ Size (unsigned integer)
+$myDecimal = 59.32;				\\ Float
+$myTruth = true;				\\ Boolean
+$myNull = null;					\\ Null (nothing)
+$myMessage = "Hello World!";	\\ String
+$mySeries = [ 0, 43, true, "I'm in an array!" ]; \\ Array
+$myTuple = (0, 29, false);
+$myDict = [
+	(20, true),
+	(30, false),
+	(40, null)
+];
+
+\\ - Constants
+%myConstNum = 3;				\\ Cannot be assigned to another value
+
+\\ - Destructables (Dynamically Allocated)
+?myDestroyable = 90;			\\ Can be assigned to another value
+free myDestroyable;				\\ ...and deallocated
+
+\\ Conditionals
+if condition {
+	\\ statements
+};
+else if condition {
+	\\ statements
+};
+else {
+	\\ statements
+};
+
+\\ Arithmetic and Comparisons
+myConstNum == 3; \\ -> true
+myConstNum > 3;  \\ -> false
+myConstNum >= 3; \\ -> true
+myConstNum < 3;  \\ -> false
+myConstNum <= 3; \\ -> true
+myConstNum != 3; \\ -> false
+myConstNum <-> 3; \\ -> 0
+myConstNum <-> 4; \\ -> <0
+myConstNum <-> 2; \\ -> >0
+
+myConstNum + 1 \\ 3 + 1 -> 4
+myConstNum - 1 \\ 3 - 1 -> 2
+myConstNum * 3 \\ 3 * 3 -> 9
+myConstNum / 3 \\ 3 / 3 -> 1
+myConstNum ** 2 \\ 3^2 -> 3 squared -> 9
+myConstNum // 2 \\ square root of 2
+
+\\ Wildcards
+\\ "." is a wildcard for anything.
+$myVar == .; \\ -> true
+
+
+\\ Jumps
+jump myLabel;
+
+\\ skips to myLabel
+
+@myLabel;
+
+\\ Exit statement
+exit; \\ exit script with "success" status
+
+\\ Fail statement
+fail fail_status;	\\ exit script with a failure object giving
+					\\ details for failure
+
+\\ Match Statement
+match expression {
+	case value1 {
+		\\ statements
+		break; \\ exit match statement
+	};
+	case value2 {
+		\\ statements
+		jump case value1; \\ can jump to another case
+	};
+	case value3 {
+		\\ statements
+		\\ case fall-through allowed
+	};
+	case . {
+		\\ matches any value
+		\\ if no fall-through case, exits the match statement
+	};
+};
+

@@ -6,7 +6,7 @@ _Contains information regarding the sprint's Git repository._
 
 _Git Branches used in the project._
 
-Checked out: **exec-ws1**
+Checked out: **master**
 
 | Date Created | Branch Name |
 | ------------ | ----------- |
@@ -24,6 +24,7 @@ _Enter "git log" in the terminal to see additional commit notes._
 
 | Date Created | Branch Name | Commit Description |
 | ------------ | ----------- | ------------------ |
+| 01.15.2018   | master      | Added some documentation |
 | 01.14.2018   | exec-ws1    | Initial execution commit |
 | 01.14.2018   | win-sprint1 | Changed '2017' in Sprint 1 Gitlog to '2018' |
 | 01.14.2018   | win-sprint1 | Added a VSCode workspace for windows folder |
